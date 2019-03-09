@@ -25,7 +25,10 @@ function decks(state = {}, action) {
         ...state,
         [action.key]: {
           ...state[action.key],
-          questions: [questions, action.card]
+          questions: [
+              ...state[action.key].questions,
+              action.card
+          ]
         }
       };
     case REMOVE_CARD:

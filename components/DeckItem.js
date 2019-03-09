@@ -5,14 +5,18 @@ import {lightPurp, white} from "../utils/colors";
 import {connect} from "react-redux";
 
 class DeckItem extends Component {
+  
   render() {
     const { deck } = this.props;
     
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate(
+            'Deck',
+            { id: deck.title }
+        )}>
           <View style={styles.container}>
             <Text style={styles.title}>{deck.title}</Text>
-            <Text style={styles.subHeader}>{`${deck.questions.length} cards`}</Text>
+            <Text style={styles.subHeader}>{`${deck.questions.length} ${deck.questions.length === 1 ? "card" : "cards"}`}</Text>
           </View>
         </TouchableOpacity>
     );
@@ -25,7 +29,8 @@ DeckItem.propTypes = {
 
 function mapStateToProps({ decks }, { id }) {
   return {
-    deck: decks[id]
+    deck: decks[id],
+    id
   }
 }
 

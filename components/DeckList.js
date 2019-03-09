@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import {connect} from "react-redux";
 import {getDecks} from "../utils/api";
 import {setDecks} from "../actions/decks";
@@ -21,23 +21,13 @@ class DeckList extends Component {
   
   _keyExtractor = (item, index) => item;
   
-  renderSeparator = () => (
-      <View
-          style={{
-            backgroundColor: 'red',
-            height: 0.5,
-          }}
-      />
-  );
-  
   render() {
     return (
         <FlatList
             style={{backgroundColor: gray}}
             data={Object.keys(this.props.decks)}
-            renderItem={({item}) => <DeckItem id={item}/>}
+            renderItem={({item}) => <DeckItem id={item} navigation={this.props.navigation}/>}
             keyExtractor={this._keyExtractor}
-            // ItemSeparatorComponent={this.renderSeparator}
         />
     );
   }

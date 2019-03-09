@@ -9,6 +9,8 @@ import { Entypo, Ionicons } from '@expo/vector-icons';
 import {purple, white} from "./utils/colors";
 import reducer from './reducers';
 import middleware from './middleware';
+import Deck from "./components/Deck";
+import AddCard from "./components/AddCard";
 
 const Tabs = createBottomTabNavigator(
     {
@@ -53,6 +55,24 @@ const MainNavigator = createStackNavigator(
     {
       Home: {
         screen: Tabs,
+      },
+      Deck: {
+        screen: Deck,
+        navigationOptions: ({ navigation }) => ({
+          headerTintColor: white,
+          headerStyle: {
+            backgroundColor: purple,
+          }
+        }),
+      },
+      AddCard: {
+        screen: AddCard,
+        navigationOptions: ({ navigation }) => ({
+          headerTintColor: white,
+          headerStyle: {
+            backgroundColor: purple,
+          }
+        }),
       }
     }
 );
