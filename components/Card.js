@@ -3,20 +3,11 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import {black, gray, white} from "../utils/colors";
 import {connect} from "react-redux";
-import {handleRemoveDeck} from "../actions/decks";
 
 class Deck extends Component {
   
-  deleteDeck = () => {
-    const { dispatch, deck } = this.props;
-    
-    dispatch(handleRemoveDeck(deck.title));
-    
-    this.props.navigation.goBack();
-  };
-  
   render() {
-    const { title, questions } = this.props.deck;
+    const { card } = this.props;
     
     return (
         <View style={styles.container}>
@@ -32,19 +23,9 @@ class Deck extends Component {
               <Text style={styles.buttonText}>Add Card</Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.quizButton}
-                            onPress={() => this.props.navigation.navigate(
-                                'Quiz',
-                                { deckName: title }
-                            )}>
+          <TouchableOpacity style={styles.quizButton}>
             <View>
               <Text style={[styles.buttonText, {color: white}]}>Start Quiz</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.deleteButton}
-                            onPress={this.deleteDeck}>
-            <View>
-              <Text style={[styles.buttonText, {color: white}]}>Delete Deck</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -56,11 +37,11 @@ Deck.propTypes = {
   deck: PropTypes.object.isRequired,
 };
 
-function mapStateToProps({ decks }, { navigation }) {
-  const { id } = navigation.state.params;
+function mapStateToProps({ deck }, { navigation }) {
+  const { index } = navigation.state.params;
   
   return {
-    deck: decks[id]
+    card: deck.questions[index]
   }
 }
 
@@ -89,13 +70,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     backgroundColor: black,
-    width: '70%',
-    padding: 15,
-    margin: 5,
-  },
-  deleteButton: {
-    borderWidth: 3,
-    borderRadius: 5,
     width: '70%',
     padding: 15,
     margin: 5,

@@ -4494,6 +4494,11 @@ react-native-branch@2.2.5:
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
   integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
 
+react-native-flip-component@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-flip-component/-/react-native-flip-component-1.0.6.tgz#f4b81fa5015404e6cb24ccb8fbaac557b3d98462"
+  integrity sha512-07yowFx9Ivi3gJ376102QmscTwgdzC5HrllwgKOXve0IIkMce7o/xZfz1NucAQRqXlbDUc24tVXVH7gh5UTh+g==
+
 react-native-gesture-handler@~1.0.14:
   version "1.0.16"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.16.tgz#bee54981575e581857c2298e133ce2ffac240a3e"

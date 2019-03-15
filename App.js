@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, Easing, Animated } from 'react-native';
 import {createStore} from "redux";
 import {Provider} from "react-redux";
 import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
@@ -11,6 +11,8 @@ import reducer from './reducers';
 import middleware from './middleware';
 import Deck from "./components/Deck";
 import AddCard from "./components/AddCard";
+import Quiz from "./components/Quiz";
+import QuizResults from "./components/QuizResults";
 
 const Tabs = createBottomTabNavigator(
     {
@@ -73,7 +75,55 @@ const MainNavigator = createStackNavigator(
             backgroundColor: purple,
           }
         }),
-      }
+      },
+      Quiz: {
+        screen: Quiz,
+        navigationOptions: ({ navigation }) => ({
+          headerTintColor: white,
+          headerStyle: {
+            backgroundColor: purple,
+          }
+        }),
+      },
+      QuizResults: {
+        screen: QuizResults,
+        navigationOptions: ({ navigation }) => ({
+          headerTintColor: white,
+          headerStyle: {
+            backgroundColor: purple,
+          }
+        }),
+      },
+    },
+    {
+      mode: 'modal',
+      defaultNavigationOptions: {
+        gesturesEnabled: false,
+      },
+      transitionConfig: () => ({
+        transitionSpec: {
+          duration: 300,
+          easing: Easing.out(Easing.poly(4)),
+          timing: Animated.timing,
+        },
+        screenInterpolator: sceneProps => {
+          const { layout, position, scene } = sceneProps;
+          const { index } = scene;
+          
+          const height = layout.initHeight;
+          const translateY = position.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [height, 0, 0],
+          });
+          
+          const opacity = position.interpolate({
+            inputRange: [index - 1, index - 0.99, index],
+            outputRange: [0, 1, 1],
+          });
+          
+          return { opacity, transform: [{ translateY }] };
+        },
+      }),
     }
 );
 

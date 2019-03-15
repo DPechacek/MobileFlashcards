@@ -40,7 +40,7 @@ class AddDeck extends Component {
                      placeholder='Enter name'/>
           <TouchableOpacity
               style={Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn}
-              onPress={this.onPress}>
+              onPress={this.onPress} disabled={this.state.text === ''}>
             <Text style={styles.submitBtnText}>SUBMIT</Text>
           </TouchableOpacity>
         </View>

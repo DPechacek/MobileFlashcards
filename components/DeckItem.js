@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import PropTypes from 'prop-types';
 import {lightPurp, white} from "../utils/colors";
 import {connect} from "react-redux";
 
+const ANIMATION_DURATION = 250;
+
 class DeckItem extends Component {
+  
+  constructor(props) {
+    super(props);
+    this._animated = new Animated.Value(0);
+  }
+  
+  onPress = () => {
+    const { deck } = this.props;
+    
+    Animated.timing(this._animated, {
+      toValue: 0,
+      duration: ANIMATION_DURATION,
+    }).start(() => this.props.navigation.navigate(
+        'Deck',
+        { id: deck.title }
+    ));
+  };
   
   render() {
     const { deck } = this.props;
     
     return (
-        <TouchableOpacity onPress={() => this.props.navigation.navigate(
-            'Deck',
-            { id: deck.title }
-        )}>
+        <TouchableOpacity onPress={this.onPress}>
           <View style={styles.container}>
             <Text style={styles.title}>{deck.title}</Text>
             <Text style={styles.subHeader}>{`${deck.questions.length} ${deck.questions.length === 1 ? "card" : "cards"}`}</Text>
