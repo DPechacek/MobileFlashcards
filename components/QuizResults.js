@@ -3,8 +3,11 @@ import {connect} from "react-redux";
 import {View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import {resetQuiz} from "../actions/quiz";
 
+/**
+ * Shows the results of the quiz
+ */
 class QuizResults extends Component {
-  //implement resetting quiz before going back
+  // Resets the quiz and navigates back
   restartQuiz = () => {
     const { dispatch } = this.props;
     
@@ -12,6 +15,9 @@ class QuizResults extends Component {
     this.props.navigation.navigate('Quiz');
   };
   
+  /**
+   * Goes back to the deck
+   */
   backToDeck = () => {
     const { dispatch, deckName } = this.props;
   
@@ -40,7 +46,7 @@ class QuizResults extends Component {
   
     return (
       <View style={styles.container}>
-        <Image width={640} height={480} source={image}/>
+        <Image width={360} height={270} source={image} style={{alignSelf: 'center'}}/>
         <Text style={styles.imageText}>
           You got {correctCount} out of {totalQuestions} correct.
         </Text>
@@ -61,6 +67,7 @@ class QuizResults extends Component {
 }
 
 function mapStateToProps({ decks }, { navigation }) {
+  // gets the deckname and count off the navigation params
   const { deckName, correctCount } = navigation.state.params;
   
   return {
@@ -75,10 +82,6 @@ export default connect(mapStateToProps)(QuizResults);
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center'
-  },
-  image: {
-    width: 512,
-    height: 384,
   },
   imageText: {
     textAlign: 'center',

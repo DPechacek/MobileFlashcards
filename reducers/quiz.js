@@ -6,23 +6,30 @@ const defaultState = {
   flipped: false
 };
 
+/**
+ * Reducer for updating the state of the active quiz.
+ *
+ * @param state
+ * @param action
+ * @returns {*}
+ */
 function quiz(state = defaultState, action) {
   switch (action.type) {
     case GET_QUIZ:
       return state;
     case UPDATE_QUIZ:
       return {
-        currentCard: action.card,
-        currentScore: action.score,
-        flipped: false
+        currentCard: action.card,   // updates the card
+        currentScore: action.score, // updates the score
+        flipped: false              // resets the flipped state of the card
       };
     case FLIP_CARD:
       return {
         ...state,
-        flipped: action.flipped
+        flipped: action.flipped     // flips the state of the card
       };
     case RESET_QUIZ:
-      return defaultState;
+      return defaultState;          // resets the quiz to the default state
     default:
       return state;
   }

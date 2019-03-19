@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, Platform} from 'react-native';
-import {purple, white} from "../utils/colors";
+import {black, gray, purple, white} from "../utils/colors";
 import {connect} from "react-redux";
 import {handleAddDeck} from "../actions/decks";
 import { NavigationActions } from 'react-navigation';
 
+/**
+ * Add a deck to the list
+ */
 class AddDeck extends Component {
   state = {
     text: ''
   };
   
+  /**
+   * Adds the deck
+   */
   onPress = () => {
     const {dispatch} = this.props;
     const deckName = this.state.text;
@@ -20,9 +26,13 @@ class AddDeck extends Component {
       text: ''
     });
     
+    // back to the deck list
     this.toHome();
   };
   
+  /**
+   * Back to the desk list
+   */
   toHome = () => {
     this.props.navigation.dispatch(NavigationActions.back({
       key: 'AddDeck',
@@ -38,10 +48,11 @@ class AddDeck extends Component {
                      onChangeText={(text) => this.setState({text})}
                      value={this.state.text}
                      placeholder='Enter name'/>
+           {/* Button is disabled if fields are not valid*/}
           <TouchableOpacity
               style={Platform.OS === 'ios' ? styles.iosBtn : styles.androidBtn}
               onPress={this.onPress} disabled={this.state.text === ''}>
-            <Text style={styles.submitBtnText}>SUBMIT</Text>
+            <Text style={[styles.submitBtnText, Platform.OS === 'ios' ? {"color": black} : {"color": white}]}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
     );
@@ -83,6 +94,6 @@ const styles = StyleSheet.create({
   submitBtnText: {
     fontSize: 22,
     textAlign: 'center',
-    margin: 10
+    margin: 10,
   },
 });

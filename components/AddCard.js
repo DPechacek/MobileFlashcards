@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, Platform} from 'react-native';
-import {purple, white} from "../utils/colors";
+import {black, purple, white} from "../utils/colors";
 import {connect} from "react-redux";
-import {handleAddCard, handleAddDeck} from "../actions/decks";
-import { NavigationActions } from 'react-navigation';
+import {handleAddCard} from "../actions/decks";
 
-class AddDeck extends Component {
+/**
+ * Adds a card to the given deck
+ */
+class AddCard extends Component {
   state = {
     question: '',
     answer: '',
     valid: false
   };
   
+  /**
+   * When the submit button is pressed, add the card to the deck
+   */
   onPress = () => {
     const {dispatch} = this.props;
     const { question, answer } = this.state;
@@ -22,23 +27,33 @@ class AddDeck extends Component {
       answer
     };
     
+    // add the card to the deck
     dispatch(handleAddCard(deckName, card));
     
+    // reset the UI
     this.setState({
       question: '',
       answer: '',
       valid: false
     });
     
+    // go back to the deck
     this.toDeck();
   };
   
+  /**
+   * Sets the state of the given field to the value
+   *
+   * @param prop
+   * @param value
+   */
   setField = (prop, value) => {
     this.setState({
       [prop]: value
     }, () => {
       const { question, answer } = this.state;
   
+      // if both fields are filled in, mark valid
       if(question && answer) {
         this.setState({
           valid: true
@@ -49,6 +64,7 @@ class AddDeck extends Component {
     
   };
   
+  // navigates back to the deck
   toDeck = () => {
     const { deckName } = this.props;
     
@@ -80,7 +96,7 @@ class AddDeck extends Component {
               onPress={this.onPress}
               disabled={!valid}
             >
-            <Text style={styles.submitBtnText}>SUBMIT</Text>
+            <Text style={[styles.submitBtnText, Platform.OS === 'ios' ? {"color": black} : {"color": white}]}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
     );
@@ -95,7 +111,7 @@ function mapStateToProps(state, { navigation }) {
   }
 }
 
-export default connect(mapStateToProps)(AddDeck);
+export default connect(mapStateToProps)(AddCard);
 
 const styles = StyleSheet.create({
   container: {
@@ -119,6 +135,7 @@ const styles = StyleSheet.create({
   androidBtn: {
     margin: 5,
     backgroundColor: purple,
+    color: white,
     padding: 10,
     borderRadius: 2,
   },

@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
-import { FlatList } from 'react-native';
+import React, {Component} from 'react';
+import {FlatList} from 'react-native';
 import {connect} from "react-redux";
 import {getDecks} from "../utils/api";
 import {setDecks} from "../actions/decks";
 import DeckItem from "./DeckItem";
 import {gray} from "../utils/colors";
 
+/**
+ * Displays the list of decks
+ */
 class DeckList extends Component {
 
+  // when the component loads, gets the list of decks from the store and displays them
   componentDidMount() {
     const {dispatch} = this.props;
     
@@ -15,8 +19,12 @@ class DeckList extends Component {
         .then((decks) => dispatch(setDecks(decks)));
   }
   
+  /**
+   * Gets the data and returns it.
+   * @returns {Promise<void>}
+   */
   async getData() {
-    await getDecks();
+    return await getDecks();
   }
   
   _keyExtractor = (item, index) => item;

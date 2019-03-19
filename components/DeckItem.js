@@ -6,6 +6,9 @@ import {connect} from "react-redux";
 
 const ANIMATION_DURATION = 250;
 
+/**
+ * Displays a deck in the deck list
+ */
 class DeckItem extends Component {
   
   constructor(props) {
@@ -13,6 +16,9 @@ class DeckItem extends Component {
     this._animated = new Animated.Value(0);
   }
   
+  /**
+   * When the deck is pressed, animates the deck to fade and then navigates to the deck
+   */
   onPress = () => {
     const { deck } = this.props;
     

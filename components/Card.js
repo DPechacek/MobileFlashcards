@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import {black, gray, white} from "../utils/colors";
 import {connect} from "react-redux";
 
-class Deck extends Component {
+/**
+ * Displays the selected card
+ */
+class Card extends Component {
   
   render() {
-    const { card } = this.props;
-    
     return (
         <View style={styles.container}>
           <Text style={styles.title}>{title}</Text>
@@ -38,6 +39,7 @@ Deck.propTypes = {
 };
 
 function mapStateToProps({ deck }, { navigation }) {
+  // get the index of the card off the navigation params
   const { index } = navigation.state.params;
   
   return {
@@ -45,7 +47,7 @@ function mapStateToProps({ deck }, { navigation }) {
   }
 }
 
-export default connect(mapStateToProps)(Deck);
+export default connect(mapStateToProps)(Card);
 
 const styles = StyleSheet.create({
   container: {

@@ -5,13 +5,37 @@ import {black, gray, white} from "../utils/colors";
 import {connect} from "react-redux";
 import {handleRemoveDeck} from "../actions/decks";
 
+/**
+ * Displays the selected deck
+ */
 class Deck extends Component {
+  state = {
+    isDeleted: false
+  };
   
+  /**
+   * Stops the component from updating if the deck was deleted
+   *
+   * @param nextProps
+   * @param nextState
+   * @param nextContext
+   * @returns {boolean}
+   */
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    return !nextState.isDeleted;
+  }
+  
+  /**
+   * Deletes the deck when pressed
+   */
   deleteDeck = () => {
     const { dispatch, deck } = this.props;
+    this.setState({
+      isDeleted: true
+    });
     
     dispatch(handleRemoveDeck(deck.title));
-    
+    // goes back to the deck list
     this.props.navigation.goBack();
   };
   
@@ -44,7 +68,7 @@ class Deck extends Component {
           <TouchableOpacity style={styles.deleteButton}
                             onPress={this.deleteDeck}>
             <View>
-              <Text style={[styles.buttonText, {color: white}]}>Delete Deck</Text>
+              <Text style={styles.buttonText}>Delete Deck</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -56,7 +80,9 @@ Deck.propTypes = {
   deck: PropTypes.object.isRequired,
 };
 
+
 function mapStateToProps({ decks }, { navigation }) {
+  // gets the id of the deck off the navigation params
   const { id } = navigation.state.params;
   
   return {

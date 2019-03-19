@@ -5,12 +5,19 @@ import {black, green, purple, red, white} from "../utils/colors";
 import {connect} from "react-redux";
 import {flipCard, updateQuiz} from "../actions/quiz";
 
+/**
+ * Displays the quiz for the current deck
+ */
 class Quiz extends Component {
   
   constructor(props) {
     super(props);
   }
   
+  /**
+   * When an answer button is selected
+   * @param correctAnswer
+   */
   next = (correctAnswer) => {
     const { currentCard, currentScore } = this.props.quiz;
     const  { dispatch } = this.props;
@@ -19,8 +26,10 @@ class Quiz extends Component {
     let card = currentCard+1;
     let score = correctAnswer ? currentScore+1 : currentScore;
     
+    // updates the displayed card and score for the quiz
     dispatch(updateQuiz(card, score));
     
+    // if we've reached the end of cards, navigate to the results
     if(card === questions.length) {
       this.props.navigation.navigate(
           'QuizResults',
@@ -32,6 +41,9 @@ class Quiz extends Component {
     }
   };
   
+  /**
+   * Flips the card when the card is pressed
+   */
   flipCard = () => {
     const flipped = this.props.quiz.flipped;
     const { dispatch } = this.props;
@@ -43,6 +55,7 @@ class Quiz extends Component {
     const { title, questions } = this.props.deck;
     const { currentCard, flipped } = this.props.quiz;
     
+    // returns nothing if we've reached the end of the list
     if(currentCard === questions.length) {
       return null;
     }
@@ -55,6 +68,7 @@ class Quiz extends Component {
             </View>
             <TouchableOpacity style={{alignSelf: 'center', width: '100%', }} onPress={this.flipCard}>
               <View style={styles.question}>
+                {/* Shows the answer or question depending if flipped*/}
                 {
                   !flipped ?
                       (
