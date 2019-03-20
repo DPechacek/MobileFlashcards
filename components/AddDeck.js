@@ -27,16 +27,17 @@ class AddDeck extends Component {
     });
     
     // back to the deck list
-    this.toHome();
+    this.toDeck(deckName);
   };
   
   /**
    * Back to the desk list
    */
-  toHome = () => {
-    this.props.navigation.dispatch(NavigationActions.back({
-      key: 'AddDeck',
-    }));
+  toDeck = (deckName) => {
+    this.props.navigation.navigate(
+        'Deck',
+        { id: deckName }
+    )
   };
   
   render() {

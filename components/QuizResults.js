@@ -24,7 +24,7 @@ class QuizResults extends Component {
     dispatch(resetQuiz());
     this.props.navigation.navigate('Deck',
         {
-          deckName: deckName
+          id: deckName
         })
   };
   
